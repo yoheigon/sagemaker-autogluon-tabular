@@ -19,13 +19,9 @@ then
     aws ecr create-repository --repository-name "${algorithm_name}" > /dev/null
 fi
 
-# Log in to ECR
-aws ecr get-login-password \
-    --region ${region} \
-    | docker login \
-    --username AWS \
-    --password-stdin ${account}.dkr.ecr.${region}.amazonaws.com \
-    > /dev/null
+# Get the login command from ECR and execute it directly
+$(aws ecr get-login --region ${region} --no-include-email)
+$(aws ecr get-login --registry-ids 763104351884 --region ${region} --no-include-email)
     
 # Build the docker image, tag with full name and then push it to ECR
 docker build  -t ${algorithm_name} -f container-inference/Dockerfile.inference .
