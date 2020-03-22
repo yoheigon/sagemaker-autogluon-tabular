@@ -15,7 +15,8 @@ from timeit import default_timer as timer
 sys.path.insert(0, 'package')
 with warnings.catch_warnings():
     warnings.filterwarnings("ignore",category=DeprecationWarning)
-    from prettytable import PrettyTable    
+    from prettytable import PrettyTable
+    import autogluon as ag
     from autogluon import TabularPrediction as task
     from autogluon.task.tabular_prediction import TabularDataset
     
