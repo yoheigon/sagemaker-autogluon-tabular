@@ -47,7 +47,7 @@ def transform_fn(net, data, input_content_type, output_content_type):
     :param net: The Gluon model.
     :param data: The request payload.
     :param input_content_type: The request content type. ('text/csv')
-    :param output_content_type: The (desired) response content type. ('application/json')
+    :param output_content_type: The (desired) response content type. ('text/csv')
     :return: response payload and content type.
     """
     start = timer()
@@ -60,11 +60,13 @@ def transform_fn(net, data, input_content_type, output_content_type):
         ds = task.Dataset(df=df)
 
         # Predict
-        predictions = net.predict(ds).tolist()
-        print(f'Prediction counts: {Counter(predictions)}')
+        predictions = net.predict(ds)
+        print(f'Prediction counts: {Counter(predictions.tolist())}')
         
         # Form response
-        response_body = json.dumps(predictions)
+        output = StringIO()
+        pd.DataFrame(predictions).to_csv(output, header=False, index=False)
+        response_body = output.getvalue()        
         
         # If target column passed, evaluate predictions performance
         target = net.label_column
