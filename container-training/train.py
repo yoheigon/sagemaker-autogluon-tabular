@@ -57,7 +57,7 @@ def train(args):
 
     predictor = task.fit(
         train_data=train_data,
-        label=args.target,            
+        label=args.label,            
         output_directory=args.model_dir,
         time_limits=args.time_limits,
         #problem_type=args.problem_type,
@@ -122,7 +122,7 @@ def parse_args():
     parser.add_argument('--train', type=str, default=os.environ['SM_CHANNEL_TRAINING'])
     #parser.add_argument('--test', type=str, default='/opt/ml/input/data/test')
 
-    parser.add_argument('--target', type=str, default='label',
+    parser.add_argument('--label', type=str, default='label',
                         help="Name of the column that contains the target variable to predict.")    
     parser.add_argument('--hyperparameter_tune', type='bool', default=False,
                         help=("Whether to tune hyperparameters or just use fixed hyperparameter values "

@@ -68,13 +68,13 @@ def transform_fn(net, data, input_content_type, output_content_type):
         pd.DataFrame(predictions).to_csv(output, header=False, index=False)
         response_body = output.getvalue()        
         
-        # If target column passed, evaluate predictions performance
-        target = net.label_column
-        if target in ds:
+        # If label column passed, evaluate predictions performance
+        label = net.label_column
+        if label in ds:
             #print('Top 3 rows of input csv:\n', make_str_table(ds.head(3)))
-            print(f'Label column ({target}) found in input data. '
+            print(f'Label column ({label}) found in input data. '
                   'Therefore, evaluating prediction performance...')
-            performance = net.evaluate_predictions(y_true=ds[target], y_pred=predictions, 
+            performance = net.evaluate_predictions(y_true=ds[label], y_pred=predictions, 
                                                    auxiliary_metrics=True)
             print(json.dumps(performance, indent=4))
             
