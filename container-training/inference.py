@@ -7,6 +7,8 @@ import os
 import json
 import subprocess
 
+warnings.filterwarnings("ignore",category=FutureWarning)
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '/opt/ml/code/package'))
 
 import pandas as pd
