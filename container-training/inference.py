@@ -7,6 +7,8 @@ import os
 import json
 import subprocess
 
+warnings.filterwarnings("ignore",category=FutureWarning)
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '/opt/ml/code/package'))
 
 import pandas as pd
@@ -74,7 +76,9 @@ def transform_fn(net, data, input_content_type, output_content_type):
             #print('Top 3 rows of input csv:\n', make_str_table(ds.head(3)))
             print(f'Label column ({target}) found in input data. '
                   'Therefore, evaluating prediction performance...')
-            performance = net.evaluate_predictions(y_true=ds[target], y_pred=predictions, 
+
+            performance = net.evaluate_predictions(y_true=ds[label], y_pred=predictions.tolist(), 
+
                                                    auxiliary_metrics=True)
             print(json.dumps(performance, indent=4))
             
