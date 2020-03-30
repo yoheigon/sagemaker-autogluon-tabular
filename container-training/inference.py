@@ -78,7 +78,6 @@ def transform_fn(net, data, input_content_type, output_content_type):
                   'Therefore, evaluating prediction performance...')
 
             performance = net.evaluate_predictions(y_true=ds[label], y_pred=predictions.tolist(), 
-
                                                    auxiliary_metrics=True)
             print(json.dumps(performance, indent=4))
             
